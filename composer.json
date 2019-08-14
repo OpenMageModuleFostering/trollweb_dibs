@@ -1,9 +1,9 @@
 {
     "name": "OpenMageModuleFostering/Trollweb_Dibs",
     "type": "magento-module",
-    "license": "Single-site-License",
+    "license": "MIT",
     "homepage": "",
-    "description": "The official DIBS Payment module for Magento, developed and supported by Trollweb Solutions.",
+    "description": "",
     "authors": [
     {
         "name": "Roy Andre Tollefsen",
