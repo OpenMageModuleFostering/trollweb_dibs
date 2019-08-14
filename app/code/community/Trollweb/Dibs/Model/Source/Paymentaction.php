@@ -23,7 +23,7 @@ class Trollweb_Dibs_Model_Source_Paymentaction
         $hdibs = Mage::helper('dibs');
         return array(
                 array('value' => 'auth', 'label' => $hdibs->__('Authorize Only')),
-                array('value' => 'sale', 'label' => $hdibs->__('Authorize + Capture'))
+                //array('value' => 'sale', 'label' => $hdibs->__('Authorize + Capture'))
             );
     }
 

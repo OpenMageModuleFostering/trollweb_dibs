@@ -84,7 +84,7 @@ class Trollweb_Dibs_Model_Dibspw_Cart
             'description' => $item->getName(),
         	'amount' => sprintf("%0.0f",$item->getBasePrice()*100), 
         	'item_id' => $item->getSku(),
-        	'vat_amount' => ($hdibspw->getConfigData('cart_tax_type') == self::NAME_VATPERCENT)?sprintf("%0.0f",$item->getTaxPercent()*100):sprintf("%0.0f",$item->getBaseTaxAmount()*100), 
+        	'vat_amount' => ($hdibspw->getConfigData('cart_tax_type') == self::NAME_VATPERCENT)?sprintf("%0.0f",$item->getTaxPercent()*100):sprintf("%0.0f",($item->getBaseTaxAmount() / $item->getQtyOrdered())*100), 
         ));
 
         $this->_items[] = $item;
