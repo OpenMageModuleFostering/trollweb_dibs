@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Trollweb_Dibs>
-            <version>1.1.3</version>
+            <version>1.1.4</version>
         </Trollweb_Dibs>
     </modules>
 
@@ -140,8 +140,7 @@
                     <cron_expr>*/10 * * * *</cron_expr>
                 </schedule>
                 <run>
-                    <model>dibs/dibspw_observer::cancelOrdersAfterTimeout
-                    </model>
+                    <model>dibs/dibspw_observer::cancelOrdersAfterTimeout</model>
                 </run>
             </dibspw_timeout>
         </jobs>

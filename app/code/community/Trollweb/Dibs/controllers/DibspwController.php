@@ -32,14 +32,7 @@ class Trollweb_Dibs_DibspwController extends Mage_Core_Controller_Front_Action
         $post = $this->getRequest()->getParams();
         $dibspw = Mage::getModel('dibs/dibspw_callback')->acceptOrder($post);
 
-        sleep(3);
-        
-        if ($dibspw->getOrder()->getStatus() == $hdibspw->getConfigData('order_status')) {
-            $this->_redirect('checkout/onepage/success', array('_secure'=>true));
-        }
-        else {
-            $this->_redirect('/', array('_secure'=>true));
-        }
+        $this->_redirect('checkout/onepage/success', array('_secure'=>true));
     }
 
     public function cancelAction() {

@@ -46,7 +46,7 @@ class Trollweb_Dibs_Model_Dibspw_Api_Request extends Varien_Object
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_TIMEOUT        => 10,
                 CURLOPT_SSL_VERIFYPEER => false,
-                CURLOPT_SSLVERSION      => 3,
+                CURLOPT_SSLVERSION      => 1,
             ),
         ));
         

@@ -22,10 +22,10 @@ class Trollweb_Dibs_Model_Dibspw_Info
     protected $_hasTransaction = false;
     
     protected $_publicMap = array(
-        'transaction_id',
-        'status',
-        'date',
-        'currency',
+        //'transaction_id',
+        //'status',
+        //'date',
+        //'currency',
     );
 
     protected $_secureMap = array(

@@ -16,13 +16,14 @@ $data     = array(
         'label' => 'Declined dibs'
     ),
 );
-
+/*
 foreach ($statuses as $code => $info) {
     $data[] = array(
         'status' => $code,
         'label'  => $info['label']
     );
 }
+*/
 $installer->getConnection()->insertArray(
     $installer->getTable('sales/order_status'),
     array('status', 'label'),
