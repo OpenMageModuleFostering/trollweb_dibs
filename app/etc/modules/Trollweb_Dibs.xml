@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Trollweb_Dibs>
+            <active>true</active>
+            <codePool>community</codePool>
+			<depends>
+				<Mage_Payment />
+			</depends>
+        </Trollweb_Dibs>
+    </modules>
+</config>

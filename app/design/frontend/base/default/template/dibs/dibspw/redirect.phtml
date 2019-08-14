@@ -1,0 +1,9 @@
+<p><?php echo $this->getMethod()->getRedirectText() ?></p>
+<script type="text/javascript">
+//<![CDATA[
+    var redirect = new VarienForm('<?php echo $this->getForm()->getId() ?>', '');
+    Event.observe(window, 'load', function() {
+    	//redirect.submit();
+    });
+//]]>
+</script>

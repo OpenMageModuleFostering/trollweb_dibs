@@ -1,0 +1,11 @@
+<fieldset class="form-list">
+    <?php $_code=$this->getMethodCode() ?>
+    <?php $logoUrl = $this->getMethod()->getLogoUrl(); ?>
+    <img alt="logo" src="<?php echo $logoUrl; ?>" />
+    <ul id="payment_form_<?php echo $_code ?>" style="display:none">
+        <li>
+        	<br />
+            <?php echo $this->getRedirectText(); ?>
+        </li>
+    </ul>
+</fieldset>
