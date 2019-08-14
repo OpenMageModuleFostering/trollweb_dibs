@@ -32,6 +32,8 @@ class Trollweb_Dibs_DibspwController extends Mage_Core_Controller_Front_Action
         $post = $this->getRequest()->getParams();
         $dibspw = Mage::getModel('dibs/dibspw_callback')->acceptOrder($post);
 
+        sleep(3);
+        
         if ($dibspw->getOrder()->getStatus() == $hdibspw->getConfigData('order_status')) {
             $this->_redirect('checkout/onepage/success', array('_secure'=>true));
         }
@@ -67,7 +69,19 @@ class Trollweb_Dibs_DibspwController extends Mage_Core_Controller_Front_Action
     }
 
     public function callbackAction() {
+        $hdibspw = Mage::helper('dibs/dibspw');
+        
         $post = $this->getRequest()->getParams();
+
+        if (!isset($post['orderId'])) {
+            $this->getResponse()->setHeader('HTTP/1.1','500 Internal Server Error');
+        }
+        
         $callback = Mage::getModel('dibs/dibspw_callback')->callback($post);
+
+        $order = Mage::getModel('sales/order')->loadByIncrementId($post['orderId']);
+        if (!$order->getId() OR $order->getStatus() != $hdibspw->getConfigData('order_status')) {
+            $this->getResponse()->setHeader('HTTP/1.1','500 Internal Server Error');
+        }
     }
 }

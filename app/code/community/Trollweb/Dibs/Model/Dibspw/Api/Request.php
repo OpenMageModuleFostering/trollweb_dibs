@@ -118,6 +118,7 @@ class Trollweb_Dibs_Model_Dibspw_Api_Request extends Varien_Object
     }
     
     public function send() {
+        $hdibs = Mage::helper('dibs');
         $result = Mage::getModel('dibs/dibspw_api_result');
         
         try {

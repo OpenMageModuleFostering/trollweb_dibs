@@ -19,12 +19,17 @@
 
 class Trollweb_Dibs_Model_Dibspw_Callback extends Trollweb_Dibs_Model_Dibspw
 {
-    protected $_callbackHasBeenCalled = false;
-        
     public function acceptOrder($post) {
-        if (!$this->_callbackHasBeenCalled) { 
-            return $this->saveTransactionData($post);
+        $hdibs = Mage::helper('dibs');
+        if (isset($post['orderId'])) {
+            $orderId = $post['orderId'];
         }
+        else {
+            $orderId = 'n/a';
+        }
+        $hdibs->dibsLog('Accrept request for Order ID: ' . $orderId);
+        
+        return $this->saveTransactionData($post);
     }
 
     public function cancelOrder($post) {
@@ -50,19 +55,39 @@ class Trollweb_Dibs_Model_Dibspw_Callback extends Trollweb_Dibs_Model_Dibspw
     }
 
     public function callback($post) {
-        $this->_callbackHasBeenCalled = true;
+        $hdibs = Mage::helper('dibs');
+        if (isset($post['orderId'])) {
+            $orderId = $post['orderId'];
+        }
+        else {
+            $orderId = 'n/a';
+        }
+        $hdibs->dibsLog('Callback request for Order ID: ' . $orderId);
+        
         return $this->saveTransactionData($post);
     }
     
     public function saveTransactionData($post) {
         $hdibs = Mage::helper('dibs');
+        
         $order = $this->getOrder();
         if (!$order->getId()) {
-            $hdibs->dibsLog('Unable to write DIBS transaction data to order/payment. Magento order id: '.isset($post['orderId'])?$post['orderId']:'n/a'. 'DIBS transaction id: '.isset($post['transaction'])?$post['transaction']:'n/a');
+            if (isset($post['orderId'])) {
+                $order = Mage::getModel('sales/order')->loadByIncrementId($post['orderId']);
+            }
+        }
+
+        if (!$order->getId()) {
+            $hdibs->dibsLog('Unable to load order. POST params:');
+            $hdibs->dibsLog($post);
+            
             return $this;
         }
         
-        if ($order->getState() == Mage_Sales_Model_Order::STATE_PROCESSING) {
+        $payment = $order->getPayment();
+        if ($payment->getAdditionalInformation(Trollweb_Dibs_Model_Dibspw::INFO_TRANSACTION_ID)) {
+            $hdibs->dibsLog('Order already have a DIBS transaction.');
+            
             return $this;
         }
         
@@ -122,10 +147,9 @@ class Trollweb_Dibs_Model_Dibspw_Callback extends Trollweb_Dibs_Model_Dibspw
             }
         }
         else {
-            $comment = 'Wrong order state ('.$order->getState().') on #'.$order->getIncrementId().' Payment will be cancelled';
+            $comment = 'Wrong order state ('.$order->getState().') on #'.$order->getIncrementId();
             $hdibs->dibsLog($comment);
-            $order->cancel()
-                ->save();
+            $hdibs->dibsLog($post);
         }
         
         if (!isset($post['transaction'])) {

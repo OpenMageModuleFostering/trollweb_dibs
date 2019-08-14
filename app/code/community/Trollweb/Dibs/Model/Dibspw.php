@@ -145,8 +145,7 @@ class Trollweb_Dibs_Model_Dibspw extends Mage_Payment_Model_Method_Abstract
 
         $request = Mage::getModel('dibs/dibspw_api_request')
             ->initRequest()
-            ->buildCancelRequest($payment)
-            ->validateData();
+            ->buildCancelRequest($payment);
         if($request === false) {
             return $this;
         }

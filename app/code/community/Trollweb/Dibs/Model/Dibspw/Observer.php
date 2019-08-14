@@ -57,7 +57,12 @@ class Trollweb_Dibs_Model_Dibspw_Observer extends Mage_Core_Model_Abstract
         $order = $event->getOrder();
         if ($order->getId()) {
             if ($order->hasInvoices() AND $order->getPayment()->getData('method') == 'dibspw') {
-                $order->setActionFlag(Mage_Sales_Model_Order::ACTION_FLAG_INVOICE, false);
+                foreach ($order->getInvoiceCollection() as $invoice) {
+                    if ($invoice->getStatus() != Mage_Sales_Model_Order_Invoice::STATE_CANCELED) {
+                        $order->setActionFlag(Mage_Sales_Model_Order::ACTION_FLAG_INVOICE, true);
+                        break;
+                    }
+                }
             }
         }
         return $this;
